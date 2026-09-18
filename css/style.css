@@ -1,0 +1,522 @@
+/* ==========================================================================
+   RAFAEL FILMMAKER // TIPOGRAFIA IDÊNTICA À REFERÊNCIA (caioaugusto.com)
+   Fontes: Source Sans 3 (sans) + Playfair Display (serif)
+   ========================================================================== */
+
+:root {
+  --bg: #141210;
+  --bg-card: #1c1917;
+  --text-cream: #f5ede4;
+  --text-muted: #a8998c;
+  --text-subtle: #6e5f54;
+
+  --border-subtle: rgba(238, 223, 203, 0.12);
+  --border-hover: rgba(238, 223, 203, 0.30);
+
+  --btn-light-bg: #f5eee6;
+  --btn-light-text: #141210;
+
+  /* Fontes exatas da referência */
+  --font-sans: 'Source Sans 3', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: dark;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-cream);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.site-header {
+  padding: 2.4rem 0 1.5rem 0;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--text-cream);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.nav-item svg {
+  stroke-width: 1.8;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--text-cream);
+}
+
+.nav-item.active {
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   HERO PRINCIPAL
+   ========================================================================== */
+.hero-section-wrap {
+  padding: 3.5rem 0 5.5rem 0;
+}
+
+.hero-minimal {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4.5rem;
+  align-items: center;
+}
+
+.hero-text-col {
+  max-width: 530px;
+}
+
+/* "EU SOU" — tiny, uppercase, muito apagado, letra-espaçada */
+.hero-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+}
+
+/* Nome principal — Source Sans 3, peso 900 (ultra bold), enorme */
+.hero-name {
+  font-family: var(--font-sans);
+  font-size: clamp(3.2rem, 6vw, 4.8rem);
+  font-weight: 900;
+  color: var(--text-cream);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.2rem;
+}
+
+/* Subtítulo — Playfair Display, itálico, cor cream */
+.hero-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-cream);
+  line-height: 1.45;
+  margin-bottom: 1.6rem;
+  opacity: 0.82;
+}
+
+/* Bio — Source Sans 3, peso 400 */
+.hero-bio {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 2.4rem;
+  font-weight: 400;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+/* Botão Pílula Clara "Sobre mim" */
+.btn-pill-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.9rem;
+  border-radius: 999px;
+  background-color: var(--btn-light-bg);
+  color: var(--btn-light-text);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.btn-pill-light:hover {
+  background-color: #e5dacb;
+  transform: translateY(-2px);
+}
+
+/* Botão Contorno "WhatsApp" */
+.btn-pill-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.8rem;
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--text-cream);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-pill-outline:hover {
+  border-color: var(--border-hover);
+  background-color: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Foto do Rafael com cantos arredondados (28px) */
+.hero-photo-col {
+  display: flex;
+  justify-content: center;
+}
+
+.photo-frame {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 5;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--border-subtle);
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   SEÇÃO SOBRE CENTRALIZADA (IDÊNTICA À REFERÊNCIA)
+   ========================================================================== */
+.home-sobre-section {
+  padding: 6.5rem 0 7rem 0;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.home-sobre-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 3.8vw, 2.6rem);
+  font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 1.4rem;
+  letter-spacing: -0.015em;
+}
+
+.home-sobre-desc {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--text-muted);
+  max-width: 660px;
+  margin: 0 auto 2.2rem auto;
+}
+
+.home-sobre-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-cream);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.35rem;
+  transition: all 0.25s ease;
+}
+
+.home-sobre-link:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   PÁGINA SOBRE MIM (SOBRE.HTML)
+   ========================================================================== */
+
+/* Cabeçalho centralizado da página Sobre — igual "Sobre mim" na referência */
+.sobre-page-header {
+  text-align: center;
+  padding: 3.5rem 0 2.5rem 0;
+}
+
+/* "Sobre mim" — Source Sans 3, peso 700, grande */
+.sobre-page-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+/* Subtítulo da página Sobre — peso 400, cor muted */
+.sobre-page-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.7;
+}
+
+.sobre-page {
+  padding: 0 0 6rem 0;
+  flex: 1;
+}
+
+.sobre-hero-quote {
+  text-align: center;
+  max-width: 740px;
+  margin: 0 auto 3rem auto;
+}
+
+.sobre-lead-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-cream);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.sobre-wa-action {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4.5rem;
+}
+
+/* Blocos Alternados */
+.story-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.5rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.story-block.reversed {
+  direction: rtl;
+}
+
+.story-block.reversed > * {
+  direction: ltr;
+}
+
+.story-text {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--text-muted);
+}
+
+.story-text p {
+  margin-bottom: 1.5rem;
+}
+
+.story-text p:last-child {
+  margin-bottom: 0;
+}
+
+.story-text strong {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.quote-box {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--accent-gold);
+}
+
+.quote-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.18rem;
+  color: var(--text-cream);
+  line-height: 1.6;
+  margin-bottom: 0.4rem;
+}
+
+.quote-author {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.story-photo {
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-subtle);
+}
+
+.story-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Convite Final do Sobre */
+.sobre-cta-box {
+  text-align: center;
+  max-width: 620px;
+  margin: 4rem auto 0 auto;
+  padding: 3.2rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 28px;
+}
+
+.sobre-cta-title {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--text-cream);
+  margin-bottom: 1rem;
+}
+
+.sobre-cta-desc {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+.site-footer {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: auto;
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--text-subtle);
+}
+
+.footer-wa {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-wa:hover {
+  color: var(--text-cream);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 860px) {
+  .hero-minimal {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero-photo-col {
+    order: -1;
+  }
+
+  .photo-frame {
+    max-width: 320px;
+  }
+
+  .home-sobre-section {
+    padding: 4.5rem 0 5rem 0;
+  }
+
+  .story-block,
+  .story-block.reversed {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    direction: ltr;
+  }
+
+  .story-photo {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}
