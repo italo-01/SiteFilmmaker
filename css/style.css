@@ -322,8 +322,37 @@ body {
   display: block;
 }
 
-.portfolio-video::-webkit-media-controls-fullscreen-button {
-  display: none !important;
+.portfolio-video-wrap {
+  cursor: pointer;
+}
+
+.portfolio-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 237, 228, 0.35);
+  background: rgba(20, 18, 16, 0.55);
+  backdrop-filter: blur(6px);
+  color: var(--text-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.portfolio-video-wrap:hover .portfolio-play-btn {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.portfolio-video-wrap.is-playing .portfolio-play-btn {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .portfolio-card-info {

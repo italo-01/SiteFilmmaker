@@ -117,7 +117,7 @@
           <!-- Vídeo 1 -->
           <article class="portfolio-card">
             <div class="portfolio-video-wrap">
-              <video class="portfolio-video" controls controlsList="nofullscreen nodownload" disablePictureInPicture preload="metadata" playsinline>
+              <video class="portfolio-video" disablePictureInPicture preload="metadata" playsinline>
                 <source src="videos/video1.mov" type="video/quicktime">
                 <source src="videos/video1.mov" type="video/mp4">
                 Seu navegador não suporta este formato de vídeo.
@@ -132,7 +132,7 @@
           <!-- Vídeo 2 -->
           <article class="portfolio-card">
             <div class="portfolio-video-wrap">
-              <video class="portfolio-video" controls controlsList="nofullscreen nodownload" disablePictureInPicture preload="metadata" playsinline>
+              <video class="portfolio-video" disablePictureInPicture preload="metadata" playsinline>
                 <source src="videos/video2.mov" type="video/quicktime">
                 <source src="videos/video2.mov" type="video/mp4">
                 Seu navegador não suporta este formato de vídeo.
@@ -147,7 +147,7 @@
           <!-- Vídeo 3 -->
           <article class="portfolio-card">
             <div class="portfolio-video-wrap">
-              <video class="portfolio-video" controls controlsList="nofullscreen nodownload" disablePictureInPicture preload="metadata" playsinline>
+              <video class="portfolio-video" disablePictureInPicture preload="metadata" playsinline>
                 <source src="videos/video3.mov" type="video/quicktime">
                 <source src="videos/video3.mov" type="video/mp4">
                 Seu navegador não suporta este formato de vídeo.
@@ -189,6 +189,34 @@
       </a>
     </div>
   </footer>
+
+  <!-- Player próprio: tocar/pausar no clique, sem opção de expandir -->
+  <script>
+    document.querySelectorAll('.portfolio-video-wrap').forEach(function (wrap) {
+      var video = wrap.querySelector('video');
+      var btn = document.createElement('button');
+      btn.className = 'portfolio-play-btn';
+      btn.setAttribute('aria-label', 'Reproduzir vídeo');
+      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+      wrap.appendChild(btn);
+
+      wrap.addEventListener('click', function () {
+        if (video.paused) {
+          document.querySelectorAll('.portfolio-video').forEach(function (v) {
+            if (v !== video) v.pause();
+          });
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+
+      video.addEventListener('play', function () { wrap.classList.add('is-playing'); });
+      video.addEventListener('pause', function () { wrap.classList.remove('is-playing'); });
+      video.addEventListener('ended', function () { wrap.classList.remove('is-playing'); });
+      video.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    });
+  </script>
 
 </body>
 </html>
