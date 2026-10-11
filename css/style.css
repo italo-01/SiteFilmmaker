@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RAFAEL FILMMAKER // TIPOGRAFIA IDÊNTICA À REFERÊNCIA (caioaugusto.com)
+   RAFAEL FILMES // TIPOGRAFIA IDÊNTICA À REFERÊNCIA (caioaugusto.com)
    Fontes: Source Sans 3 (sans) + Playfair Display (serif)
    ========================================================================== */
 
@@ -162,9 +162,9 @@ body {
 /* Bio — Source Sans 3, peso 400 */
 .hero-bio {
   font-family: var(--font-sans);
-  font-size: 1.1rem;
+  font-size: 1.22rem;
   color: var(--text-muted);
-  line-height: 1.85;
+  line-height: 1.8;
   margin-bottom: 2.4rem;
   font-weight: 400;
 }
@@ -245,6 +245,120 @@ body {
 }
 
 /* ==========================================================================
+   SEÇÃO ALGUNS TRABALHOS FEITOS POR MIM
+   ========================================================================== */
+.home-portfolio-section {
+  padding: 5rem 0 6rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.portfolio-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.portfolio-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.portfolio-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 3.8vw, 2.6rem);
+  font-weight: 900;
+  color: var(--text-cream);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.portfolio-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.portfolio-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+.portfolio-video-wrap {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background-color: #0b0a09;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portfolio-card-info {
+  padding: 1.4rem 1.4rem 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.portfolio-card-category {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.portfolio-card-title {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
    SEÇÃO SOBRE CENTRALIZADA (IDÊNTICA À REFERÊNCIA)
    ========================================================================== */
 .home-sobre-section {
@@ -264,9 +378,9 @@ body {
 
 .home-sobre-desc {
   font-family: var(--font-sans);
-  font-size: 1.05rem;
-  font-weight: 300;
-  line-height: 1.85;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.8;
   color: var(--text-muted);
   max-width: 660px;
   margin: 0 auto 2.2rem auto;
@@ -371,9 +485,9 @@ body {
 
 .story-text {
   font-family: var(--font-sans);
-  font-size: 1.1rem;
+  font-size: 1.28rem;
   font-weight: 400;
-  line-height: 1.85;
+  line-height: 1.75;
   color: var(--text-muted);
 }
 

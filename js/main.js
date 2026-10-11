@@ -248,7 +248,7 @@ function initContactForm() {
     // Monta texto estruturado e elegante para o WhatsApp
     const whatsappNumber = "5511999999999"; // Substitua pelo número real de Rafael com DDD
     const textLines = [
-      `*NOVO CONTATO VIA SITE - FILMMAKER RAFAEL* 🎬`,
+      `*NOVO CONTATO VIA SITE - RAFAEL FILMES* 🎬`,
       ``,
       `*Nome:* ${name}`,
       `*E-mail:* ${email}`,
