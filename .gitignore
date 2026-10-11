@@ -1,0 +1,4 @@
+# Vídeos originais do iPhone (muito grandes / formato .MOV não roda no Chrome).
+# O site usa as versões convertidas em .mp4.
+videos/*.mov
+videos/*.MOV
