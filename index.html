@@ -290,6 +290,45 @@
       video.addEventListener('ended', function () { wrap.classList.remove('is-playing'); });
       video.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     });
+
+    // Pausar o vídeo atual quando o usuário deslizar/arrastar para o vídeo do lado
+    if (portfolioGrid) {
+      portfolioGrid.addEventListener('scroll', function () {
+        document.querySelectorAll('.portfolio-card').forEach(function (card) {
+          var video = card.querySelector('video');
+          if (video && !video.paused) {
+            var cardRect = card.getBoundingClientRect();
+            var gridRect = portfolioGrid.getBoundingClientRect();
+            var cardCenter = cardRect.left + (cardRect.width / 2);
+            var gridCenter = gridRect.left + (gridRect.width / 2);
+            // Se o card se afastar do centro do carrossel, pausa imediatamente
+            if (Math.abs(cardCenter - gridCenter) > (cardRect.width * 0.35)) {
+              video.pause();
+            }
+          }
+        });
+      }, { passive: true });
+
+      if ('IntersectionObserver' in window) {
+        var cardObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting || entry.intersectionRatio < 0.55) {
+              var v = entry.target.querySelector('video');
+              if (v && !v.paused) {
+                v.pause();
+              }
+            }
+          });
+        }, {
+          root: portfolioGrid,
+          threshold: [0.2, 0.55, 0.8]
+        });
+
+        document.querySelectorAll('.portfolio-card').forEach(function (card) {
+          cardObserver.observe(card);
+        });
+      }
+    }
   </script>
 
 </body>
