@@ -322,6 +322,10 @@ body {
   display: block;
 }
 
+.portfolio-video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
 .portfolio-card-info {
   padding: 1.4rem 1.4rem 1.6rem 1.4rem;
   display: flex;
