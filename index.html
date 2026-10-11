@@ -227,14 +227,23 @@
       });
     }
 
-    // Carrossel: suporte a arrastar (drag com mouse ou touch)
     var portfolioGrid = document.querySelector('.portfolio-grid');
+    var currentPlayingVideo = null;
+    var playScrollLeft = 0;
     var isDragging = false;
     var startX = 0;
     var scrollStart = 0;
     var moved = 0;
 
+    // Função para pausar o vídeo ativo
+    function pauseActiveVideo() {
+      if (currentPlayingVideo && !currentPlayingVideo.paused) {
+        currentPlayingVideo.pause();
+      }
+    }
+
     if (portfolioGrid) {
+      // 1. Suporte a arrastar com mouse (Desktop)
       portfolioGrid.addEventListener('mousedown', function (e) {
         isDragging = false;
         moved = 0;
@@ -250,6 +259,7 @@
         moved = Math.abs(walk);
         if (moved > 6) {
           isDragging = true;
+          pauseActiveVideo();
         }
         portfolioGrid.scrollLeft = scrollStart - (walk * 1.3);
       });
@@ -260,6 +270,32 @@
           setTimeout(function () { isDragging = false; }, 80);
         }
       });
+
+      // 2. NO CELULAR: Ao mover o dedo na tela (Touch) -> Pausa imediata
+      var touchStartX = 0;
+      portfolioGrid.addEventListener('touchstart', function (e) {
+        if (e.touches && e.touches[0]) {
+          touchStartX = e.touches[0].clientX;
+        }
+      }, { passive: true });
+
+      portfolioGrid.addEventListener('touchmove', function (e) {
+        if (e.touches && e.touches[0]) {
+          var diffX = Math.abs(e.touches[0].clientX - touchStartX);
+          if (diffX > 15) {
+            pauseActiveVideo();
+          }
+        }
+      }, { passive: true });
+
+      // 3. Ao rolar o carrossel (Scroll com inércia / snap)
+      portfolioGrid.addEventListener('scroll', function () {
+        if (currentPlayingVideo && !currentPlayingVideo.paused) {
+          if (Math.abs(portfolioGrid.scrollLeft - playScrollLeft) > 20) {
+            pauseActiveVideo();
+          }
+        }
+      }, { passive: true });
     }
 
     // Players de Vídeo (play/pause ao tocar, sem expandir)
@@ -276,6 +312,7 @@
         if (isDragging) return;
 
         if (video.paused) {
+          // Pausa outros vídeos
           document.querySelectorAll('.portfolio-video').forEach(function (v) {
             if (v !== video) v.pause();
           });
@@ -285,50 +322,30 @@
         }
       });
 
-      video.addEventListener('play', function () { wrap.classList.add('is-playing'); });
-      video.addEventListener('pause', function () { wrap.classList.remove('is-playing'); });
-      video.addEventListener('ended', function () { wrap.classList.remove('is-playing'); });
+      video.addEventListener('play', function () {
+        currentPlayingVideo = video;
+        if (portfolioGrid) {
+          playScrollLeft = portfolioGrid.scrollLeft;
+        }
+        wrap.classList.add('is-playing');
+      });
+
+      video.addEventListener('pause', function () {
+        wrap.classList.remove('is-playing');
+        if (currentPlayingVideo === video) {
+          currentPlayingVideo = null;
+        }
+      });
+
+      video.addEventListener('ended', function () {
+        wrap.classList.remove('is-playing');
+        if (currentPlayingVideo === video) {
+          currentPlayingVideo = null;
+        }
+      });
+
       video.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     });
-
-    // Pausar o vídeo atual quando o usuário deslizar/arrastar para o vídeo do lado
-    if (portfolioGrid) {
-      portfolioGrid.addEventListener('scroll', function () {
-        document.querySelectorAll('.portfolio-card').forEach(function (card) {
-          var video = card.querySelector('video');
-          if (video && !video.paused) {
-            var cardRect = card.getBoundingClientRect();
-            var gridRect = portfolioGrid.getBoundingClientRect();
-            var cardCenter = cardRect.left + (cardRect.width / 2);
-            var gridCenter = gridRect.left + (gridRect.width / 2);
-            // Se o card se afastar do centro do carrossel, pausa imediatamente
-            if (Math.abs(cardCenter - gridCenter) > (cardRect.width * 0.35)) {
-              video.pause();
-            }
-          }
-        });
-      }, { passive: true });
-
-      if ('IntersectionObserver' in window) {
-        var cardObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting || entry.intersectionRatio < 0.55) {
-              var v = entry.target.querySelector('video');
-              if (v && !v.paused) {
-                v.pause();
-              }
-            }
-          });
-        }, {
-          root: portfolioGrid,
-          threshold: [0.2, 0.55, 0.8]
-        });
-
-        document.querySelectorAll('.portfolio-card').forEach(function (card) {
-          cardObserver.observe(card);
-        });
-      }
-    }
   </script>
 
 </body>
