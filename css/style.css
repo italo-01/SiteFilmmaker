@@ -186,16 +186,37 @@ body {
 }
 
 /* ==========================================================================
-   HERO PRINCIPAL
+   HERO PRINCIPAL (TRAVADA NO SCROLL ENQUANTO O VÍDEO AVANÇA/VOLTA)
    ========================================================================== */
+.hero-scroll-track {
+  position: relative;
+  height: 300vh;
+}
+
+.hero-sticky-stage {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  z-index: 20;
+}
+
 .hero-section-wrap {
-  padding: 3.5rem 0 5.5rem 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 3.5rem;
 }
 
 .hero-minimal {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 4.5rem;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3.5rem;
   align-items: center;
 }
 
@@ -300,7 +321,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Foto do Rafael com cantos arredondados (28px) */
+/* Quadro de Vídeo da Hero com cantos arredondados (28px) */
 .hero-photo-col {
   display: flex;
   justify-content: center;
@@ -316,11 +337,29 @@ body {
   border: 1.5px solid var(--border-subtle);
 }
 
-.photo-frame img {
+.photo-frame.hero-video-frame {
+  max-width: 500px;
+  aspect-ratio: 16 / 9;
+  background-color: #ffffff;
+}
+
+.photo-frame img,
+.hero-scroll-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.hero-scroll-video {
+  object-fit: contain;
+  background-color: #ffffff;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-scroll-video::-webkit-media-controls {
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -1011,15 +1050,20 @@ body {
     font-size: 1.25rem;
   }
 
-  /* Hero Mobile (Foto no topo, textos e botões centralizados - Imagem 1) */
+  /* Hero Mobile (Vídeo no topo, textos e botões centralizados, travado no scroll) */
+  .hero-scroll-track {
+    height: 280vh;
+  }
+
   .hero-section-wrap {
-    padding: 1.8rem 0 4.5rem 0;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
 
   .hero-minimal {
     display: flex;
     flex-direction: column;
-    gap: 2.2rem;
+    gap: 1.4rem;
     align-items: center;
   }
 
@@ -1038,6 +1082,11 @@ body {
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
   }
 
+  .photo-frame.hero-video-frame {
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
   .hero-text-col {
     text-align: center;
     max-width: 100%;
@@ -1046,33 +1095,33 @@ body {
 
   .hero-kicker {
     text-align: center;
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     letter-spacing: 0.26em;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .hero-name {
     text-align: center;
-    font-size: clamp(2.8rem, 11vw, 3.8rem);
+    font-size: clamp(2.4rem, 10vw, 3.4rem);
     font-weight: 900;
     line-height: 1.05;
     letter-spacing: -0.02em;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.65rem;
   }
 
   .hero-subtitle {
     text-align: center;
-    font-size: 1.22rem;
-    line-height: 1.45;
-    margin-bottom: 1.4rem;
+    font-size: 1.12rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
     opacity: 0.88;
   }
 
   .hero-bio {
     text-align: center;
-    font-size: 1.05rem;
-    line-height: 1.75;
-    margin: 0 auto 2.2rem auto;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin: 0 auto 1.5rem auto;
     max-width: 480px;
   }
 
