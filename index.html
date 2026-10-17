@@ -349,10 +349,11 @@
       heroVideo.controls = false;
       heroVideo.pause();
 
-      var targetProgress = 0;
-      var currentProgress = 0;
+      var fps = 24;
+      var totalFrames = 120;
+      var pendingFrame = 0;
+      var renderedFrame = -1;
       var heroRafId = null;
-      var videoDuration = 0;
 
       function computeHeroScrollProgress() {
         var maxScroll = heroTrack.offsetHeight - heroStage.offsetHeight;
@@ -361,43 +362,40 @@
         return Math.max(0, Math.min(1, scrolled / maxScroll));
       }
 
-      function renderHeroVideoFrame() {
-        var diff = targetProgress - currentProgress;
-        if (Math.abs(diff) > 0.0005) {
-          currentProgress += diff * 0.35;
-        } else {
-          currentProgress = targetProgress;
-        }
+      function applyPendingFrame() {
+        heroRafId = null;
+        if (heroVideo.readyState < 2) return;
+        if (pendingFrame === renderedFrame) return;
+        if (heroVideo.seeking) return;
 
-        if (videoDuration > 0 && heroVideo.readyState >= 2) {
-          var maxSafeTime = Math.max(0, videoDuration - 0.04);
-          var desiredTime = currentProgress * maxSafeTime;
-          if (!heroVideo.seeking && Math.abs(heroVideo.currentTime - desiredTime) > 0.003) {
-            heroVideo.currentTime = desiredTime;
-          }
-        }
-
-        if (Math.abs(targetProgress - currentProgress) > 0.0005 || heroVideo.seeking) {
-          heroRafId = requestAnimationFrame(renderHeroVideoFrame);
-        } else {
-          heroRafId = null;
-        }
+        renderedFrame = pendingFrame;
+        heroVideo.currentTime = (renderedFrame + 0.1) / fps;
       }
 
       function onHeroScroll() {
-        targetProgress = computeHeroScrollProgress();
-        if (!heroRafId) {
-          heroRafId = requestAnimationFrame(renderHeroVideoFrame);
+        var progress = computeHeroScrollProgress();
+        var nextFrame = Math.round(progress * totalFrames);
+        if (nextFrame !== pendingFrame) {
+          pendingFrame = nextFrame;
+          if (!heroRafId && !heroVideo.seeking) {
+            heroRafId = requestAnimationFrame(applyPendingFrame);
+          }
         }
       }
 
+      // Assim que o decodificador terminar um frame, aplica o próximo imediatamente se o scroll avançou
+      heroVideo.addEventListener('seeked', function () {
+        if (pendingFrame !== renderedFrame && !heroRafId) {
+          heroRafId = requestAnimationFrame(applyPendingFrame);
+        }
+      });
+
       function initHeroVideo() {
         if (heroVideo.duration && !isNaN(heroVideo.duration)) {
-          videoDuration = heroVideo.duration;
-          targetProgress = computeHeroScrollProgress();
-          currentProgress = targetProgress;
-          var initialTime = currentProgress * Math.max(0, videoDuration - 0.04);
-          heroVideo.currentTime = initialTime > 0 ? initialTime : 0.001;
+          totalFrames = Math.max(1, Math.floor(heroVideo.duration * fps) - 1);
+          var progress = computeHeroScrollProgress();
+          pendingFrame = Math.round(progress * totalFrames);
+          applyPendingFrame();
         }
       }
 
@@ -406,6 +404,21 @@
       heroVideo.addEventListener('canplay', initHeroVideo);
       if (heroVideo.readyState >= 1) {
         initHeroVideo();
+      }
+
+      // Carrega o vídeo inteiro na memória RAM (Blob) quando aberto via HTTP/HTTPS para zero atraso de rede no scroll
+      if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        var videoSrc = heroVideo.getAttribute('src');
+        if (videoSrc) {
+          fetch(videoSrc)
+            .then(function (res) { return res.blob(); })
+            .then(function (blob) {
+              var blobUrl = URL.createObjectURL(blob);
+              heroVideo.src = blobUrl;
+              heroVideo.load();
+            })
+            .catch(function () {});
+        }
       }
 
       // Desbloqueia busca de frames em navegadores mobile (iOS/Android) no primeiro toque
