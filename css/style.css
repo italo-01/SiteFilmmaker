@@ -4,18 +4,19 @@
    ========================================================================== */
 
 :root {
-  --bg: #ffffff;
-  --bg-card: #f8f7f5;
-  --text-cream: #141210;
-  --text-muted: #57524c;
-  --text-subtle: #8c8278;
-  --accent-gold: #8a6d3b;
+  --bg: #0d0d0d;
+  --bg-card: #161616;
+  --surface-light: #f2f1ec;
+  --text-cream: #ffffff;
+  --text-muted: #b0b0b0;
+  --text-subtle: #888888;
+  --accent-gold: #efb02e;
 
-  --border-subtle: rgba(20, 18, 16, 0.10);
-  --border-hover: rgba(20, 18, 16, 0.25);
+  --border-subtle: rgba(239, 176, 46, 0.28);
+  --border-hover: rgba(239, 176, 46, 0.75);
 
-  --btn-light-bg: #141210;
-  --btn-light-text: #ffffff;
+  --btn-light-bg: #efb02e;
+  --btn-light-text: #0d0d0d;
 
   /* Fontes exatas da referência */
   --font-sans: 'Source Sans 3', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -30,7 +31,7 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
   font-size: 16px;
   scroll-behavior: smooth;
 }
@@ -56,7 +57,7 @@ body {
 }
 
 /* ==========================================================================
-   HEADER
+   HEADER (COM CANTONEIRAS DOURADAS DA IMAGEM)
    ========================================================================== */
 .site-header {
   position: relative;
@@ -64,18 +65,56 @@ body {
 }
 
 .header-row {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-row::before,
+.header-row::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid var(--accent-gold);
+  pointer-events: none;
+}
+
+.header-row::before {
+  left: 0;
+  border-left: 2px solid var(--accent-gold);
+}
+
+.header-row::after {
+  right: 0;
+  border-right: 2px solid var(--accent-gold);
 }
 
 .logo {
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 900;
   color: var(--text-cream);
   text-decoration: none;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.logo-icon {
+  color: var(--accent-gold);
+  font-size: 1.15rem;
+  letter-spacing: -0.05em;
+  margin-right: 0.15rem;
+}
+
+.logo-accent {
+  color: var(--accent-gold);
 }
 
 .nav-links {
@@ -92,7 +131,7 @@ body {
   text-decoration: none;
   font-family: var(--font-sans);
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
@@ -102,11 +141,11 @@ body {
 
 .nav-item:hover,
 .nav-item.active {
-  color: var(--text-cream);
+  color: var(--accent-gold);
 }
 
 .nav-item.active {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* Botão Menu Hamburger no celular (estilo limpo minimalista) */
@@ -215,26 +254,27 @@ body {
   flex-wrap: wrap;
 }
 
-/* Botão Pílula Clara "Sobre mim" */
+/* Botão Principal Amarelo Âmbar (Estilo da Imagem) */
 .btn-pill-light {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.9rem;
+  padding: 0.78rem 1.9rem;
   border-radius: 999px;
   background-color: var(--btn-light-bg);
   color: var(--btn-light-text);
   font-family: var(--font-sans);
-  font-weight: 600;
+  font-weight: 800;
   font-size: 0.95rem;
   text-decoration: none;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 20px rgba(239, 176, 46, 0.25);
 }
 
 .btn-pill-light:hover {
-  background-color: #2c2824;
+  background-color: #ffc247;
   transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(239, 176, 46, 0.4);
 }
 
 /* Botão Contorno "WhatsApp" */
@@ -246,17 +286,17 @@ body {
   border-radius: 999px;
   background-color: transparent;
   color: var(--text-cream);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--accent-gold);
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
   transition: all 0.25s ease;
 }
 
 .btn-pill-outline:hover {
-  border-color: var(--border-hover);
-  background-color: rgba(20, 18, 16, 0.04);
+  border-color: #ffc247;
+  background-color: rgba(239, 176, 46, 0.10);
   transform: translateY(-2px);
 }
 
@@ -272,8 +312,8 @@ body {
   aspect-ratio: 4 / 5;
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.10);
-  border: 1px solid var(--border-subtle);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  border: 1.5px solid var(--border-subtle);
 }
 
 .photo-frame img {
@@ -288,7 +328,7 @@ body {
    ========================================================================== */
 .home-portfolio-section {
   padding: 5rem 0 6rem 0;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .portfolio-header {
@@ -302,9 +342,9 @@ body {
   font-size: 0.75rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--text-subtle);
+  color: var(--accent-gold);
   margin-bottom: 0.8rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .portfolio-title {
@@ -332,7 +372,7 @@ body {
 
 .portfolio-card {
   background-color: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   border-radius: 20px;
   overflow: hidden;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -342,16 +382,17 @@ body {
 
 .portfolio-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-hover);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-gold);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
 }
 
 .portfolio-video-wrap {
   width: 100%;
   aspect-ratio: 9 / 16;
-  background-color: #f0eeeb;
+  background-color: #090909;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .portfolio-video {
@@ -359,10 +400,6 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.portfolio-video-wrap {
-  cursor: pointer;
 }
 
 .portfolio-play-btn {
@@ -373,20 +410,22 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: rgba(20, 18, 16, 0.60);
+  border: 2px solid var(--accent-gold);
+  background: rgba(13, 13, 13, 0.72);
   backdrop-filter: blur(6px);
-  color: #ffffff;
+  color: var(--accent-gold);
   display: flex;
   align-items: center;
   justify-content: center;
   padding-left: 4px;
   cursor: pointer;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.25s ease;
 }
 
 .portfolio-video-wrap:hover .portfolio-play-btn {
-  transform: translate(-50%, -50%) scale(1.06);
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--accent-gold);
+  color: #0d0d0d;
 }
 
 .portfolio-video-wrap.is-playing .portfolio-play-btn {
@@ -407,7 +446,7 @@ body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent-gold);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .portfolio-card-title {
@@ -425,18 +464,235 @@ body {
 }
 
 /* ==========================================================================
+   SEÇÃO: SERVIÇOS E COMO CONTRATAR (AGREGAMENTOS DA IMAGEM ENVIADA)
+   ========================================================================== */
+.services-clapper-section {
+  padding: 5.5rem 0 6rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Claquete Cinematográfica */
+.clapper-banner {
+  margin-bottom: 3.5rem;
+}
+
+.clapper-stripes {
+  height: 44px;
+  border-radius: 10px 10px 0 0;
+  background-color: #121212;
+  background-image:
+    linear-gradient(180deg, transparent 42%, #0d0d0d 42%, #0d0d0d 58%, transparent 58%),
+    repeating-linear-gradient(
+      -62deg,
+      var(--accent-gold) 0px,
+      var(--accent-gold) 22px,
+      #141414 22px,
+      #141414 44px
+    );
+  border: 1px solid rgba(239, 176, 46, 0.4);
+  border-bottom: none;
+}
+
+.clapper-headline-box {
+  background-color: #111111;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  padding: 2rem 2.2rem;
+}
+
+.clapper-headline {
+  font-family: var(--font-sans);
+  font-size: clamp(1.85rem, 4.5vw, 3.1rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* Blocos de Serviços */
+.services-block {
+  margin-bottom: 3rem;
+}
+
+.services-section-label {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+.services-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Cards Claros Off-White (#F2F1EC) — "Como posso te atender" */
+.service-card-light {
+  background-color: var(--surface-light);
+  color: #111111;
+  border-radius: 20px;
+  padding: 2rem 1.8rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.service-card-light .service-card-title {
+  font-family: var(--font-sans);
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #0d0d0d;
+  margin-bottom: 0.2rem;
+}
+
+.service-card-light .service-card-sub {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: #666666;
+  margin-bottom: 1.3rem;
+  font-weight: 400;
+}
+
+.service-card-light .service-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.service-card-light .service-bullet-list li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #1c1c1c;
+  line-height: 1.45;
+}
+
+.service-card-light .service-bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-gold);
+}
+
+/* Cards Escuros com Borda Dourada — "Como contratar" */
+.service-card-dark {
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--accent-gold);
+  border-radius: 20px;
+  padding: 2rem 1.8rem;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card-dark .service-card-title {
+  font-family: var(--font-sans);
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.service-card-dark .service-card-sub {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: #9e9e9e;
+  margin-bottom: 1.3rem;
+  font-weight: 400;
+}
+
+.service-card-dark .service-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.service-card-dark .service-bullet-list li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #e8e8e8;
+  line-height: 1.45;
+}
+
+.service-card-dark .service-bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-gold);
+}
+
+/* Aviso Sem Multa dentro do Card Recorrente */
+.service-badge-notice {
+  margin-top: 1.5rem;
+  background-color: #242424;
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: #ffffff;
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+
+.service-badge-notice svg {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+/* Botão Largo Amarelo Âmbar: "Faça seu orçamento" */
+.cta-banner-amber {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--accent-gold);
+  color: #0d0d0d;
+  text-decoration: none;
+  padding: 1.45rem 2.2rem;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 12px 30px rgba(239, 176, 46, 0.22);
+}
+
+.cta-banner-amber:hover {
+  background-color: #ffc247;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(239, 176, 46, 0.36);
+}
+
+/* ==========================================================================
    SEÇÃO SOBRE CENTRALIZADA (IDÊNTICA À REFERÊNCIA)
    ========================================================================== */
 .home-sobre-section {
   padding: 6.5rem 0 7rem 0;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
 }
 
 .home-sobre-title {
   font-family: var(--font-sans);
   font-size: clamp(2rem, 3.8vw, 2.6rem);
-  font-weight: 700;
+  font-weight: 900;
   color: var(--text-cream);
   margin-bottom: 1.4rem;
   letter-spacing: -0.015em;
@@ -458,19 +714,19 @@ body {
   gap: 0.4rem;
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-cream);
+  color: var(--accent-gold);
   text-decoration: none;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1.5px solid var(--accent-gold);
   padding-bottom: 0.35rem;
   transition: all 0.25s ease;
 }
 
 .home-sobre-link:hover {
-  color: var(--accent-gold);
-  border-color: var(--accent-gold);
+  color: #ffffff;
+  border-color: #ffffff;
   transform: translateY(-1px);
 }
 
@@ -488,7 +744,7 @@ body {
 .sobre-page-title {
   font-family: var(--font-sans);
   font-size: clamp(2.4rem, 5vw, 3.6rem);
-  font-weight: 700;
+  font-weight: 900;
   color: var(--text-cream);
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
@@ -573,7 +829,7 @@ body {
 .quote-box {
   margin: 2rem 0;
   padding-left: 1.5rem;
-  border-left: 2px solid var(--accent-gold);
+  border-left: 3px solid var(--accent-gold);
 }
 
 .quote-quote {
@@ -598,8 +854,8 @@ body {
   border-radius: 28px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.10);
-  border: 1px solid var(--border-subtle);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
+  border: 1.5px solid var(--border-subtle);
 }
 
 .story-photo img {
@@ -616,55 +872,84 @@ body {
   margin: 4rem auto 0 auto;
   padding: 3.2rem 2rem;
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--accent-gold);
   border-radius: 28px;
 }
 
 .sobre-cta-title {
-  font-family: var(--font-serif);
-  font-size: 1.65rem;
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 800;
   color: var(--text-cream);
   margin-bottom: 1rem;
 }
 
 .sobre-cta-desc {
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--text-muted);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   margin-bottom: 2rem;
 }
 
 /* ==========================================================================
-   RODAPÉ
+   RODAPÉ (COM CANTONEIRAS DOURADAS DA IMAGEM)
    ========================================================================== */
 .site-footer {
   padding: 2.5rem 0;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin-top: auto;
 }
 
 .footer-row {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
+  padding: 1rem 1.2rem;
   font-family: var(--font-sans);
-  font-size: 0.88rem;
-  color: var(--text-subtle);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.footer-row strong {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.footer-row::before,
+.footer-row::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid var(--accent-gold);
+  pointer-events: none;
+}
+
+.footer-row::before {
+  left: 0;
+  border-left: 2px solid var(--accent-gold);
+}
+
+.footer-row::after {
+  right: 0;
+  border-right: 2px solid var(--accent-gold);
 }
 
 .footer-wa {
-  color: var(--text-muted);
+  color: var(--accent-gold);
+  font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .footer-wa:hover {
-  color: var(--text-cream);
+  color: #ffffff;
 }
 
 /* ==========================================================================
@@ -695,18 +980,31 @@ body {
     top: calc(100% + 8px);
     left: 1.5rem;
     right: 1.5rem;
-    background: #ffffff;
-    border: 1px solid var(--border-hover);
+    background: #161616;
+    border: 1.5px solid var(--accent-gold);
     border-radius: 20px;
     padding: 1.5rem;
     gap: 1.2rem;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
     z-index: 99;
   }
 
   .nav-links.is-open .nav-item {
     font-size: 1.1rem;
     padding: 0.35rem 0;
+  }
+
+  .services-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clapper-headline-box {
+    padding: 1.5rem 1.3rem;
+  }
+
+  .cta-banner-amber {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.25rem;
   }
 
   /* Hero Mobile (Foto no topo, textos e botões centralizados - Imagem 1) */
