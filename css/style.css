@@ -4,17 +4,18 @@
    ========================================================================== */
 
 :root {
-  --bg: #141210;
-  --bg-card: #1c1917;
-  --text-cream: #f5ede4;
-  --text-muted: #a8998c;
-  --text-subtle: #6e5f54;
+  --bg: #ffffff;
+  --bg-card: #f8f7f5;
+  --text-cream: #141210;
+  --text-muted: #57524c;
+  --text-subtle: #8c8278;
+  --accent-gold: #8a6d3b;
 
-  --border-subtle: rgba(238, 223, 203, 0.12);
-  --border-hover: rgba(238, 223, 203, 0.30);
+  --border-subtle: rgba(20, 18, 16, 0.10);
+  --border-hover: rgba(20, 18, 16, 0.25);
 
-  --btn-light-bg: #f5eee6;
-  --btn-light-text: #141210;
+  --btn-light-bg: #141210;
+  --btn-light-text: #ffffff;
 
   /* Fontes exatas da referência */
   --font-sans: 'Source Sans 3', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -29,7 +30,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   font-size: 16px;
   scroll-behavior: smooth;
 }
@@ -228,11 +229,11 @@ body {
   font-size: 0.95rem;
   text-decoration: none;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .btn-pill-light:hover {
-  background-color: #e5dacb;
+  background-color: #2c2824;
   transform: translateY(-2px);
 }
 
@@ -255,7 +256,7 @@ body {
 
 .btn-pill-outline:hover {
   border-color: var(--border-hover);
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(20, 18, 16, 0.04);
   transform: translateY(-2px);
 }
 
@@ -271,7 +272,7 @@ body {
   aspect-ratio: 4 / 5;
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.10);
   border: 1px solid var(--border-subtle);
 }
 
@@ -342,13 +343,13 @@ body {
 .portfolio-card:hover {
   transform: translateY(-4px);
   border-color: var(--border-hover);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
 }
 
 .portfolio-video-wrap {
   width: 100%;
   aspect-ratio: 9 / 16;
-  background-color: #0b0a09;
+  background-color: #f0eeeb;
   position: relative;
   overflow: hidden;
 }
@@ -372,10 +373,10 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 1px solid rgba(245, 237, 228, 0.35);
-  background: rgba(20, 18, 16, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(20, 18, 16, 0.60);
   backdrop-filter: blur(6px);
-  color: var(--text-cream);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -597,7 +598,7 @@ body {
   border-radius: 28px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.10);
   border: 1px solid var(--border-subtle);
 }
 
@@ -694,12 +695,12 @@ body {
     top: calc(100% + 8px);
     left: 1.5rem;
     right: 1.5rem;
-    background: #181513;
+    background: #ffffff;
     border: 1px solid var(--border-hover);
     border-radius: 20px;
     padding: 1.5rem;
     gap: 1.2rem;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14);
     z-index: 99;
   }
 
@@ -732,7 +733,7 @@ body {
     max-width: 100%;
     aspect-ratio: 4 / 5;
     border-radius: 28px;
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
   }
 
   .hero-text-col {
