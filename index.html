@@ -21,6 +21,22 @@
   <div class="hero-scroll-track" id="heroScrollTrack">
     <div class="hero-sticky-stage" id="heroStickyStage">
 
+      <!-- Camada de Fundo da Hero: Vídeo Controlado pelo Scroll + Gradiente de Leitura -->
+      <div class="hero-bg-video-layer" aria-hidden="true">
+        <video
+          id="heroScrollVideo"
+          class="hero-scroll-video"
+          src="videos/video_camera_1080p_limpo_sem_marca.mp4"
+          muted
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          tabindex="-1"></video>
+        <div class="hero-bg-gradient"></div>
+      </div>
+
       <!-- ======================================================================
            HEADER MINIMALISTA
            ====================================================================== -->
@@ -70,11 +86,10 @@
       </header>
 
       <!-- ======================================================================
-           HERO PRINCIPAL (VÍDEO DA CÂMERA CONTROLADO PELO SCROLL)
+           HERO PRINCIPAL (TEXTO SOBRE A ANIMAÇÃO DE FUNDO)
            ====================================================================== -->
       <section class="container hero-section-wrap">
         <div class="hero-minimal">
-          <!-- Coluna da Esquerda: Textos no formato exato da foto -->
           <div class="hero-text-col">
             <p class="hero-kicker">EU SOU</p>
             <h1 class="hero-name">Rafael <span class="logo-accent">Filmes</span></h1>
@@ -100,24 +115,6 @@
                 </svg>
                 <span>WhatsApp</span>
               </a>
-            </div>
-          </div>
-
-          <!-- Coluna da Direita: Vídeo Mudo e Sem Controles Controlado pelo Scroll -->
-          <div class="hero-photo-col">
-            <div class="photo-frame hero-video-frame">
-              <video
-                id="heroScrollVideo"
-                class="hero-scroll-video"
-                src="videos/video_camera_1080p_limpo_sem_marca.mp4"
-                muted
-                playsinline
-                webkit-playsinline
-                preload="auto"
-                disablePictureInPicture
-                disableRemotePlayback
-                tabindex="-1"
-                aria-label="Animação em vídeo da câmera controlada pelo scroll"></video>
             </div>
           </div>
         </div>
