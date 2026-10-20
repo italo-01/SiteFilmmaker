@@ -433,20 +433,59 @@
     var portfolioGrid = document.querySelector('.portfolio-grid');
     var currentPlayingVideo = null;
     var playScrollLeft = 0;
+    var playWindowScrollY = 0;
     var isDragging = false;
     var startX = 0;
     var scrollStart = 0;
     var moved = 0;
 
-    // Função para pausar o vídeo ativo
+    // Função para pausar todos os vídeos em reprodução do portfólio
     function pauseActiveVideo() {
       if (currentPlayingVideo && !currentPlayingVideo.paused) {
         currentPlayingVideo.pause();
       }
+      document.querySelectorAll('.portfolio-video').forEach(function (v) {
+        if (!v.paused) {
+          v.pause();
+        }
+      });
+    }
+
+    // 1. Pausa imediata ao rolar a página para cima ou para baixo (Vertical Scroll)
+    window.addEventListener('scroll', function () {
+      if (currentPlayingVideo && !currentPlayingVideo.paused) {
+        if (Math.abs(window.scrollY - playWindowScrollY) > 20) {
+          pauseActiveVideo();
+        }
+      }
+    }, { passive: true });
+
+    // 2. Pausa imediata ao trocar de aba, minimizar o navegador ou perder o foco da janela
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        pauseActiveVideo();
+      }
+    });
+    window.addEventListener('blur', pauseActiveVideo);
+    window.addEventListener('pagehide', pauseActiveVideo);
+
+    // 3. IntersectionObserver: garante que se o vídeo sair da área visível da tela, ele pause
+    if ('IntersectionObserver' in window) {
+      var videoObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting && !entry.target.paused) {
+            entry.target.pause();
+          }
+        });
+      }, { threshold: 0.6 });
+
+      document.querySelectorAll('.portfolio-video').forEach(function (v) {
+        videoObserver.observe(v);
+      });
     }
 
     if (portfolioGrid) {
-      // 1. Suporte a arrastar com mouse (Desktop)
+      // 4. Suporte a arrastar com mouse (Desktop)
       portfolioGrid.addEventListener('mousedown', function (e) {
         isDragging = false;
         moved = 0;
@@ -474,24 +513,27 @@
         }
       });
 
-      // 2. NO CELULAR: Ao mover o dedo na tela (Touch) -> Pausa imediata
+      // 5. NO CELULAR: Ao mover o dedo na tela (Horizontal ou Vertical) -> Pausa imediata
       var touchStartX = 0;
+      var touchStartY = 0;
       portfolioGrid.addEventListener('touchstart', function (e) {
         if (e.touches && e.touches[0]) {
           touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
         }
       }, { passive: true });
 
       portfolioGrid.addEventListener('touchmove', function (e) {
         if (e.touches && e.touches[0]) {
           var diffX = Math.abs(e.touches[0].clientX - touchStartX);
-          if (diffX > 15) {
+          var diffY = Math.abs(e.touches[0].clientY - touchStartY);
+          if (diffX > 15 || diffY > 15) {
             pauseActiveVideo();
           }
         }
       }, { passive: true });
 
-      // 3. Ao rolar o carrossel (Scroll com inércia / snap)
+      // 6. Ao rolar o carrossel (Scroll com inércia / snap)
       portfolioGrid.addEventListener('scroll', function () {
         if (currentPlayingVideo && !currentPlayingVideo.paused) {
           if (Math.abs(portfolioGrid.scrollLeft - playScrollLeft) > 20) {
@@ -527,6 +569,7 @@
 
       video.addEventListener('play', function () {
         currentPlayingVideo = video;
+        playWindowScrollY = window.scrollY;
         if (portfolioGrid) {
           playScrollLeft = portfolioGrid.scrollLeft;
         }
