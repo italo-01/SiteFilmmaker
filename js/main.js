@@ -311,7 +311,7 @@ function initSmoothScroll() {
 }
 
 /* ==========================================================================
-   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO
+   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (COM LOOP CONTÍNUO)
    ========================================================================== */
 function initCaptacaoVideo() {
   const block = document.getElementById('captacao');
@@ -319,6 +319,10 @@ function initCaptacaoVideo() {
 
   const video = block.querySelector('.cap-video');
   if (!video) return;
+
+  // Garante loop contínuo
+  video.loop = true;
+
   const cols = Array.prototype.slice.call(block.querySelectorAll('.cap-col'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let raf;
@@ -331,19 +335,33 @@ function initCaptacaoVideo() {
       c.classList.toggle('is-on', t >= parseFloat(c.dataset.reveal));
     });
   }
+
   function tick() {
     show(video.currentTime);
-    if (!video.paused && !video.ended) raf = requestAnimationFrame(tick);
+    if (!video.paused) raf = requestAnimationFrame(tick);
   }
 
   video.addEventListener('play', function () { cancelAnimationFrame(raf); tick(); });
   video.addEventListener('seeked', function () { show(video.currentTime); });
-  video.addEventListener('ended', function () { show(Infinity); video.style.cursor = 'pointer'; });
+  video.addEventListener('timeupdate', function () { show(video.currentTime); });
+  video.addEventListener('ended', function () {
+    if (video.loop) {
+      video.currentTime = 0;
+      video.play().catch(function () {});
+    } else {
+      show(Infinity);
+      video.style.cursor = 'pointer';
+    }
+  });
   video.addEventListener('error', function () { show(Infinity); });
 
-  // clicar no vídeo depois que terminou = ver de novo
+  // clicar no vídeo pausa ou retoma
   video.addEventListener('click', function () {
-    if (video.ended) { video.currentTime = 0; video.play().catch(function () {}); }
+    if (video.paused) {
+      video.play().catch(function () {});
+    } else {
+      video.pause();
+    }
   });
 
   // modo manual: controles no vídeo + textos todos visíveis embaixo dele
@@ -357,17 +375,28 @@ function initCaptacaoVideo() {
   // quem pede menos animação não recebe autoplay
   if (reduceMotion) { manual(); return; }
 
-  // toca uma vez, quando metade do bloco aparece na tela
+  // Toca em loop enquanto o bloco estiver visível na tela e pausa ao sair
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(function (entries, io) {
+    const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        io.disconnect();
-        video.play().catch(manual);
+        if (e.isIntersecting) {
+          video.play().catch(manual);
+        } else {
+          if (!video.paused) {
+            video.pause();
+          }
+        }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.35 });
     observer.observe(block);
   } else {
-    manual();
+    video.play().catch(manual);
   }
+
+  // Pausa ao trocar de aba ou minimizar para economizar bateria e CPU
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && !video.paused) {
+      video.pause();
+    }
+  });
 }
