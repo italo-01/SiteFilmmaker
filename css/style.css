@@ -1277,7 +1277,22 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  cursor: pointer;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cap-video::-webkit-media-controls,
+.cap-video::-webkit-media-controls-panel,
+.cap-video::-webkit-media-controls-enclosure,
+.cap-video::-webkit-media-controls-fullscreen-button,
+.cap-video::-webkit-media-controls-overflow-button,
+.cap-video::-webkit-media-controls-play-button,
+.cap-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .cap-stage::after {

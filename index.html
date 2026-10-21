@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -125,9 +125,16 @@
         <div class="cap-block" id="captacao">
           <div class="cap-stage">
             <video id="capVideo" class="cap-video"
-                   src="videos/captacao_editado.mp4?v=2"
+                   src="videos/captacao_editado.mp4?v=3"
                    poster="img/captacao_poster.jpg"
-                   muted playsinline loop preload="metadata" disablePictureInPicture
+                   muted
+                   playsinline
+                   webkit-playsinline
+                   loop
+                   preload="metadata"
+                   disablePictureInPicture
+                   disableRemotePlayback
+                   controlsList="nodownload nofullscreen noremoteplayback"
                    aria-label="Captação, estratégia e edição: como os vídeos da Rafael Filmes são produzidos">
             </video>
           </div>
@@ -343,7 +350,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=2"></script>
+  <script src="js/main.js?v=3"></script>
 
   <!-- Script: Menu Mobile + Player com suporte a arrastar/deslizar no carrossel -->
   <script>

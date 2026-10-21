@@ -311,7 +311,7 @@ function initSmoothScroll() {
 }
 
 /* ==========================================================================
-   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (COM LOOP CONTÍNUO)
+   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (LOOP CONTÍNUO SEM CONTROLES NEM PAUSA MANUAL)
    ========================================================================== */
 function initCaptacaoVideo() {
   const block = document.getElementById('captacao');
@@ -320,13 +320,16 @@ function initCaptacaoVideo() {
   const video = block.querySelector('.cap-video');
   if (!video) return;
 
-  // Garante loop contínuo
+  // Garante loop contínuo e remove qualquer controle nativo (sem 3 pontinhos nem expandir)
   video.loop = true;
+  video.controls = false;
+  video.removeAttribute('controls');
 
   const cols = Array.prototype.slice.call(block.querySelectorAll('.cap-col'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let raf;
   let isManual = false;
+  let isBlockInView = false;
 
   // mostra cada coluna quando o vídeo chega no segundo marcado em data-reveal
   function show(t) {
@@ -345,58 +348,73 @@ function initCaptacaoVideo() {
   video.addEventListener('seeked', function () { show(video.currentTime); });
   video.addEventListener('timeupdate', function () { show(video.currentTime); });
   video.addEventListener('ended', function () {
-    if (video.loop) {
-      video.currentTime = 0;
-      video.play().catch(function () {});
-    } else {
-      show(Infinity);
-      video.style.cursor = 'pointer';
-    }
+    video.currentTime = 0;
+    video.play().catch(function () {});
   });
   video.addEventListener('error', function () { show(Infinity); });
+  video.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
-  // clicar no vídeo pausa ou retoma
-  video.addEventListener('click', function () {
-    if (video.paused) {
-      video.play().catch(function () {});
-    } else {
-      video.pause();
+  // Inicia reprodução segura sem controles
+  function startPlayback() {
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function () {
+        // Desbloqueio silencioso no primeiro toque caso o navegador mobile exija
+        function unlock() {
+          video.play().catch(function () {});
+          window.removeEventListener('touchstart', unlock);
+          window.removeEventListener('click', unlock);
+          window.removeEventListener('scroll', unlock);
+        }
+        window.addEventListener('touchstart', unlock, { passive: true, once: true });
+        window.addEventListener('click', unlock, { passive: true, once: true });
+        window.addEventListener('scroll', unlock, { passive: true, once: true });
+      });
     }
-  });
+  }
 
-  // modo manual: controles no vídeo + textos todos visíveis embaixo dele
+  // modo manual: textos visíveis embaixo, NUNCA adiciona controles
   function manual() {
     isManual = true;
     block.classList.add('is-manual');
     show(Infinity);
-    video.controls = true;
   }
 
-  // quem pede menos animação não recebe autoplay
-  if (reduceMotion) { manual(); return; }
+  if (reduceMotion) {
+    manual();
+  }
 
-  // Toca em loop enquanto o bloco estiver visível na tela e pausa ao sair
+  // O vídeo roda contínuo e SÓ pausa ao rolar para longe ou sair da página
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          video.play().catch(manual);
+          isBlockInView = true;
+          startPlayback();
         } else {
+          isBlockInView = false;
           if (!video.paused) {
             video.pause();
           }
         }
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.2 });
     observer.observe(block);
   } else {
-    video.play().catch(manual);
+    isBlockInView = true;
+    startPlayback();
   }
 
-  // Pausa ao trocar de aba ou minimizar para economizar bateria e CPU
+  // Pausa ao trocar de aba, minimizar ou sair da página
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden && !video.paused) {
+    if (document.hidden) {
       video.pause();
+    } else if (isBlockInView) {
+      startPlayback();
     }
+  });
+
+  window.addEventListener('pagehide', function () {
+    video.pause();
   });
 }
