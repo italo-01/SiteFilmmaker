@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -116,6 +116,41 @@
   </div>
 
   <main>
+
+    <!-- ==========================================================================
+         SEÇÃO: CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO
+         ========================================================================== -->
+    <section class="home-captacao-section" aria-label="Como os vídeos são produzidos">
+      <div class="cap-wrap">
+        <div class="cap-block" id="captacao">
+          <div class="cap-stage">
+            <video id="capVideo" class="cap-video"
+                   src="videos/captacao_editado.mp4?v=1"
+                   poster="img/captacao_poster.jpg"
+                   muted playsinline preload="metadata" disablePictureInPicture
+                   aria-label="Captação, estratégia e edição: como os vídeos da Rafael Filmes são produzidos">
+            </video>
+          </div>
+
+          <div class="cap-texts">
+            <article class="cap-col" data-reveal="3.7">
+              <h3 class="cap-col-title">Captação que valoriza a sua imagem</h3>
+              <p>Cada detalhe da gravação é pensado para transmitir profissionalismo, autoridade e credibilidade. A captação combina enquadramento, iluminação, qualidade de áudio e direção visual para transformar a sua mensagem em um conteúdo claro, envolvente e alinhado ao posicionamento da sua marca.</p>
+            </article>
+
+            <article class="cap-col" data-reveal="4.6">
+              <h3 class="cap-col-title">Estratégia para transformar ideias em conteúdo</h3>
+              <p>Um vídeo relevante começa antes da gravação. Estrutura o roteiro, organiza a narrativa e direciona cada etapa para que o conteúdo tenha clareza, ritmo e propósito. O resultado é uma comunicação mais objetiva, natural e preparada para prender a atenção do público.</p>
+            </article>
+
+            <article class="cap-col" data-reveal="5.5">
+              <h3 class="cap-col-title">Edição que dá ritmo à sua mensagem</h3>
+              <p>Na pós-produção, cada corte é pensado para manter o interesse e potencializar a comunicação. O vídeo recebe edição dinâmica, legendas, trilha sonora, elementos visuais, ajustes de cor e recursos criativos que tornam o conteúdo mais profissional, atual e adequado às plataformas digitais.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ==========================================================================
          SEÇÃO: ALGUNS TRABALHOS FEITOS POR MIM
@@ -307,6 +342,8 @@
       </a>
     </div>
   </footer>
+
+  <script src="js/main.js"></script>
 
   <!-- Script: Menu Mobile + Player com suporte a arrastar/deslizar no carrossel -->
   <script>

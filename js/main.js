@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initVideoModal();
   initContactForm();
   initSmoothScroll();
+  initCaptacaoVideo();
 });
 
 /* ==========================================================================
@@ -307,4 +308,66 @@ function initSmoothScroll() {
       }
     });
   });
+}
+
+/* ==========================================================================
+   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO
+   ========================================================================== */
+function initCaptacaoVideo() {
+  const block = document.getElementById('captacao');
+  if (!block) return;
+
+  const video = block.querySelector('.cap-video');
+  if (!video) return;
+  const cols = Array.prototype.slice.call(block.querySelectorAll('.cap-col'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let raf;
+  let isManual = false;
+
+  // mostra cada coluna quando o vídeo chega no segundo marcado em data-reveal
+  function show(t) {
+    if (isManual) t = Infinity;
+    cols.forEach(function (c) {
+      c.classList.toggle('is-on', t >= parseFloat(c.dataset.reveal));
+    });
+  }
+  function tick() {
+    show(video.currentTime);
+    if (!video.paused && !video.ended) raf = requestAnimationFrame(tick);
+  }
+
+  video.addEventListener('play', function () { cancelAnimationFrame(raf); tick(); });
+  video.addEventListener('seeked', function () { show(video.currentTime); });
+  video.addEventListener('ended', function () { show(Infinity); video.style.cursor = 'pointer'; });
+  video.addEventListener('error', function () { show(Infinity); });
+
+  // clicar no vídeo depois que terminou = ver de novo
+  video.addEventListener('click', function () {
+    if (video.ended) { video.currentTime = 0; video.play().catch(function () {}); }
+  });
+
+  // modo manual: controles no vídeo + textos todos visíveis embaixo dele
+  function manual() {
+    isManual = true;
+    block.classList.add('is-manual');
+    show(Infinity);
+    video.controls = true;
+  }
+
+  // quem pede menos animação não recebe autoplay
+  if (reduceMotion) { manual(); return; }
+
+  // toca uma vez, quando metade do bloco aparece na tela
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function (entries, io) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        video.play().catch(manual);
+      });
+    }, { threshold: 0.5 });
+    observer.observe(block);
+  } else {
+    manual();
+  }
 }

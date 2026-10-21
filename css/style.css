@@ -1237,3 +1237,179 @@ body {
     gap: 0.8rem;
   }
 }
+
+
+/* ==========================================================================
+   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO
+   ========================================================================== */
+.home-captacao-section {
+  padding: 4rem 0 5rem;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+}
+
+.cap-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.cap-block {
+  container: cap / inline-size;
+  position: relative;
+  margin: 0 auto;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--bg-card);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.cap-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #b9bbbd;
+}
+
+.cap-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cap-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 60px rgba(13, 13, 13, 0.16);
+}
+
+.cap-texts {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 82%;
+  margin: 0;
+  padding-inline: 5.15cqw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2cqw;
+  z-index: 1;
+}
+
+.cap-col {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cap-col.is-on {
+  opacity: 1;
+}
+
+.cap-col p {
+  margin: 0;
+  font-family: var(--font-sans, 'Source Sans 3', sans-serif);
+  font-size: 1.1cqw;
+  line-height: 1.38;
+  color: #23262c;
+  text-wrap: pretty;
+}
+
+.cap-col-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@container cap (max-width: 1000px) {
+  .cap-texts {
+    position: static;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 22px 32px;
+  }
+  .cap-col {
+    opacity: 1;
+  }
+  .cap-col-title {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    margin: 0 0 12px;
+    font: 700 1.1rem/1.25 var(--font-sans, 'Source Sans 3', sans-serif);
+    color: var(--text-cream, #fff);
+  }
+  .cap-col-title::after {
+    content: "";
+    display: block;
+    width: 42px;
+    height: 4px;
+    margin-top: 10px;
+    background: var(--accent-gold, #efb02e);
+  }
+  .cap-col p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-muted, #b0b0b0);
+  }
+}
+
+.cap-block.is-manual .cap-texts {
+  position: static;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: 28px 22px 32px;
+}
+
+.cap-block.is-manual .cap-col {
+  opacity: 1;
+}
+
+.cap-block.is-manual .cap-col-title {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  margin: 0 0 12px;
+  font: 700 1.1rem/1.25 var(--font-sans, 'Source Sans 3', sans-serif);
+  color: var(--text-cream, #fff);
+}
+
+.cap-block.is-manual .cap-col-title::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 4px;
+  margin-top: 10px;
+  background: var(--accent-gold, #efb02e);
+}
+
+.cap-block.is-manual .cap-col p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-muted, #b0b0b0);
+}
+
+@media (min-width: 769px) {
+  .cap-block.is-manual .cap-texts {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cap-col {
+    transition: none;
+  }
+}
