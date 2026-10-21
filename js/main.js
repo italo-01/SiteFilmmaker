@@ -311,7 +311,7 @@ function initSmoothScroll() {
 }
 
 /* ==========================================================================
-   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (LOOP CONTÍNUO, SEM SOM, SEM CONTROLES, PAUSA SÓ AO SAIR)
+   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (LOOP CONTÍNUO, SEM CONTROLES, ULTRA COMPATÍVEL MOBILE)
    ========================================================================== */
 function initCaptacaoVideo() {
   const block = document.getElementById('captacao');
@@ -320,11 +320,14 @@ function initCaptacaoVideo() {
   const video = block.querySelector('.cap-video');
   if (!video) return;
 
-  // Força muted, loop contínuo e remove qualquer controle nativo
+  // Atributos e propriedades essenciais para iOS Safari e Chrome Android
   video.muted = true;
   video.defaultMuted = true;
   video.loop = true;
   video.controls = false;
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
   video.removeAttribute('controls');
 
   // MutationObserver para garantir que nenhum navegador injete 'controls'
@@ -343,6 +346,7 @@ function initCaptacaoVideo() {
   let raf;
   let isManual = false;
   let isBlockInView = false;
+  let hasStartedPlaying = false;
 
   // mostra cada coluna quando o vídeo chega no segundo marcado em data-reveal
   function show(t) {
@@ -357,7 +361,11 @@ function initCaptacaoVideo() {
     if (!video.paused) raf = requestAnimationFrame(tick);
   }
 
-  video.addEventListener('play', function () { cancelAnimationFrame(raf); tick(); });
+  video.addEventListener('play', function () {
+    hasStartedPlaying = true;
+    cancelAnimationFrame(raf);
+    tick();
+  });
   video.addEventListener('seeked', function () { show(video.currentTime); });
   video.addEventListener('timeupdate', function () { show(video.currentTime); });
   video.addEventListener('ended', function () {
@@ -367,33 +375,35 @@ function initCaptacaoVideo() {
   video.addEventListener('error', function () { show(Infinity); });
   video.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
-  // Inicia reprodução contínua sem som e sem controles
+  // Inicia reprodução segura compatível com iOS Safari / Android
   function startPlayback() {
     video.muted = true;
     const p = video.play();
     if (p && typeof p.catch === 'function') {
       p.catch(function () {
+        // Desbloqueia na primeira interação do usuário (scroll, toque, clique)
         function unlock() {
           video.muted = true;
           video.play().catch(function () {});
-          window.removeEventListener('touchstart', unlock);
-          window.removeEventListener('click', unlock);
-          window.removeEventListener('scroll', unlock);
+          ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'click', 'scroll'].forEach(function (evt) {
+            window.removeEventListener(evt, unlock);
+          });
         }
-        window.addEventListener('touchstart', unlock, { passive: true, once: true });
-        window.addEventListener('click', unlock, { passive: true, once: true });
-        window.addEventListener('scroll', unlock, { passive: true, once: true });
+        ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'click', 'scroll'].forEach(function (evt) {
+          window.addEventListener(evt, unlock, { passive: true, once: true });
+        });
       });
     }
   }
 
   function pausePlayback() {
-    if (!video.paused) {
+    // SÓ pausa se o vídeo realmente já começou a tocar alguma vez
+    if (hasStartedPlaying && !video.paused) {
       video.pause();
     }
   }
 
-  // modo manual: apenas posiciona textos embaixo se prefers-reduced-motion estiver ativo, NUNCA adiciona controles
+  // modo manual: textos visíveis embaixo, NUNCA adiciona controles
   function manual() {
     isManual = true;
     block.classList.add('is-manual');
@@ -405,6 +415,7 @@ function initCaptacaoVideo() {
   }
 
   // O vídeo roda contínuo e SÓ pausa ao rolar para longe ou sair da página
+  // rootMargin de 150px pré-ativa o vídeo antes mesmo de entrar na viewport
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -416,7 +427,7 @@ function initCaptacaoVideo() {
           pausePlayback();
         }
       });
-    }, { threshold: 0.15 });
+    }, { rootMargin: '150px 0px 150px 0px', threshold: 0 });
     observer.observe(block);
   } else {
     isBlockInView = true;
@@ -432,12 +443,6 @@ function initCaptacaoVideo() {
     }
   });
 
-  window.addEventListener('blur', pausePlayback);
-  window.addEventListener('focus', function () {
-    if (isBlockInView) {
-      startPlayback();
-    }
-  });
   window.addEventListener('pagehide', pausePlayback);
   window.addEventListener('beforeunload', pausePlayback);
 
@@ -447,4 +452,7 @@ function initCaptacaoVideo() {
       pausePlayback();
     });
   });
+
+  // Disparo inicial proativo
+  startPlayback();
 }
