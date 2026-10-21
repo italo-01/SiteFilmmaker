@@ -1270,6 +1270,9 @@ body {
   position: relative;
   aspect-ratio: 16 / 9;
   background: #b9bbbd;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .cap-video {
@@ -1284,15 +1287,29 @@ body {
 
 .cap-video::-webkit-media-controls,
 .cap-video::-webkit-media-controls-panel,
+.cap-video::-webkit-media-controls-panel-container,
 .cap-video::-webkit-media-controls-enclosure,
 .cap-video::-webkit-media-controls-fullscreen-button,
 .cap-video::-webkit-media-controls-overflow-button,
 .cap-video::-webkit-media-controls-play-button,
-.cap-video::-webkit-media-controls-start-playback-button {
+.cap-video::-webkit-media-controls-start-playback-button,
+.cap-video::-webkit-media-controls-timeline,
+.cap-video::-webkit-media-controls-current-time-display,
+.cap-video::-webkit-media-controls-time-remaining-display,
+.cap-video::-webkit-media-controls-mute-button,
+.cap-video::-webkit-media-controls-toggle-closed-captions-button,
+.cap-video::-webkit-media-controls-volume-slider {
   display: none !important;
+  -webkit-appearance: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.cap-video::-moz-media-controls {
+  display: none !important;
 }
 
 .cap-stage::after {

@@ -311,7 +311,7 @@ function initSmoothScroll() {
 }
 
 /* ==========================================================================
-   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (LOOP CONTÍNUO SEM CONTROLES NEM PAUSA MANUAL)
+   SEÇÃO CAPTAÇÃO · ESTRATÉGIA · EDIÇÃO (LOOP CONTÍNUO, SEM SOM, SEM CONTROLES, PAUSA SÓ AO SAIR)
    ========================================================================== */
 function initCaptacaoVideo() {
   const block = document.getElementById('captacao');
@@ -320,10 +320,23 @@ function initCaptacaoVideo() {
   const video = block.querySelector('.cap-video');
   if (!video) return;
 
-  // Garante loop contínuo e remove qualquer controle nativo (sem 3 pontinhos nem expandir)
+  // Força muted, loop contínuo e remove qualquer controle nativo
+  video.muted = true;
+  video.defaultMuted = true;
   video.loop = true;
   video.controls = false;
   video.removeAttribute('controls');
+
+  // MutationObserver para garantir que nenhum navegador injete 'controls'
+  if ('MutationObserver' in window) {
+    const mo = new MutationObserver(function () {
+      if (video.hasAttribute('controls') || video.controls) {
+        video.controls = false;
+        video.removeAttribute('controls');
+      }
+    });
+    mo.observe(video, { attributes: true, attributeFilter: ['controls'] });
+  }
 
   const cols = Array.prototype.slice.call(block.querySelectorAll('.cap-col'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -349,18 +362,19 @@ function initCaptacaoVideo() {
   video.addEventListener('timeupdate', function () { show(video.currentTime); });
   video.addEventListener('ended', function () {
     video.currentTime = 0;
-    video.play().catch(function () {});
+    startPlayback();
   });
   video.addEventListener('error', function () { show(Infinity); });
   video.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
-  // Inicia reprodução segura sem controles
+  // Inicia reprodução contínua sem som e sem controles
   function startPlayback() {
+    video.muted = true;
     const p = video.play();
     if (p && typeof p.catch === 'function') {
       p.catch(function () {
-        // Desbloqueio silencioso no primeiro toque caso o navegador mobile exija
         function unlock() {
+          video.muted = true;
           video.play().catch(function () {});
           window.removeEventListener('touchstart', unlock);
           window.removeEventListener('click', unlock);
@@ -373,7 +387,13 @@ function initCaptacaoVideo() {
     }
   }
 
-  // modo manual: textos visíveis embaixo, NUNCA adiciona controles
+  function pausePlayback() {
+    if (!video.paused) {
+      video.pause();
+    }
+  }
+
+  // modo manual: apenas posiciona textos embaixo se prefers-reduced-motion estiver ativo, NUNCA adiciona controles
   function manual() {
     isManual = true;
     block.classList.add('is-manual');
@@ -393,12 +413,10 @@ function initCaptacaoVideo() {
           startPlayback();
         } else {
           isBlockInView = false;
-          if (!video.paused) {
-            video.pause();
-          }
+          pausePlayback();
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.15 });
     observer.observe(block);
   } else {
     isBlockInView = true;
@@ -408,13 +426,25 @@ function initCaptacaoVideo() {
   // Pausa ao trocar de aba, minimizar ou sair da página
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
-      video.pause();
+      pausePlayback();
     } else if (isBlockInView) {
       startPlayback();
     }
   });
 
-  window.addEventListener('pagehide', function () {
-    video.pause();
+  window.addEventListener('blur', pausePlayback);
+  window.addEventListener('focus', function () {
+    if (isBlockInView) {
+      startPlayback();
+    }
+  });
+  window.addEventListener('pagehide', pausePlayback);
+  window.addEventListener('beforeunload', pausePlayback);
+
+  // Pausa se o usuário clicar para ir para outra seção/página (ex: Sobre ou WhatsApp)
+  document.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      pausePlayback();
+    });
   });
 }

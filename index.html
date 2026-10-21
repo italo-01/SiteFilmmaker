@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
 
@@ -125,16 +125,16 @@
         <div class="cap-block" id="captacao">
           <div class="cap-stage">
             <video id="capVideo" class="cap-video"
-                   src="videos/captacao_editado.mp4?v=3"
+                   src="videos/captacao_editado.mp4?v=4"
                    poster="img/captacao_poster.jpg"
                    muted
                    playsinline
                    webkit-playsinline
                    loop
-                   preload="metadata"
+                   preload="auto"
                    disablePictureInPicture
                    disableRemotePlayback
-                   controlsList="nodownload nofullscreen noremoteplayback"
+                   autoplay controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
                    aria-label="Captação, estratégia e edição: como os vídeos da Rafael Filmes são produzidos">
             </video>
           </div>
@@ -176,7 +176,7 @@
           <!-- Vídeo 1 -->
           <article class="portfolio-card">
             <div class="portfolio-video-wrap">
-              <video class="portfolio-video" disablePictureInPicture preload="metadata" playsinline>
+              <video class="portfolio-video" disablePictureInPicture preload="auto" playsinline>
                 <source src="videos/video1.mp4#t=0.1" type="video/mp4">
                 Seu navegador não suporta este formato de vídeo.
               </video>
@@ -190,7 +190,7 @@
           <!-- Vídeo 2 -->
           <article class="portfolio-card">
             <div class="portfolio-video-wrap">
-              <video class="portfolio-video" disablePictureInPicture preload="metadata" playsinline>
+              <video class="portfolio-video" disablePictureInPicture preload="auto" playsinline>
                 <source src="videos/video2.mp4#t=0.1" type="video/mp4">
                 Seu navegador não suporta este formato de vídeo.
               </video>
@@ -204,7 +204,7 @@
           <!-- Vídeo 3 -->
           <article class="portfolio-card">
             <div class="portfolio-video-wrap">
-              <video class="portfolio-video" disablePictureInPicture preload="metadata" playsinline>
+              <video class="portfolio-video" disablePictureInPicture preload="auto" playsinline>
                 <source src="videos/video3.mp4#t=0.1" type="video/mp4">
                 Seu navegador não suporta este formato de vídeo.
               </video>
@@ -350,7 +350,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=3"></script>
+  <script src="js/main.js?v=4"></script>
 
   <!-- Script: Menu Mobile + Player com suporte a arrastar/deslizar no carrossel -->
   <script>
