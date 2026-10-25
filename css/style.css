@@ -184,79 +184,33 @@ body {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ==========================================================================
-   HERO PRINCIPAL (VÍDEO DE FUNDO TRAVADO NO SCROLL + GRADIENTE DE LEITURA)
-   ========================================================================== */
-.hero-scroll-track {
-  position: relative;
-  height: 185vh;
-}
 
-.hero-sticky-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100dvh;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   HERO SIMPLES (SEM VÍDEO DE FUNDO — FUNDO ESCURO SÓLIDO)
+   ========================================================================== */
+.hero-simple-stage {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg);
   display: flex;
   flex-direction: column;
-  background-color: var(--bg);
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
-  z-index: 20;
-}
-
-.hero-bg-video-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 4vw;
-  padding-top: 3rem;
-  pointer-events: none;
-  overflow: hidden;
-  background-color: var(--bg);
-}
-
-.hero-scroll-video {
-  width: min(68vw, 820px);
-  height: min(72vh, 520px);
-  object-fit: contain;
-  object-position: center center;
-  display: block;
-  background-color: var(--bg);
-  pointer-events: none;
-  user-select: none;
-}
-
-.hero-scroll-video::-webkit-media-controls {
-  display: none !important;
-}
-
-.hero-bg-gradient {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(13, 13, 13, 0.86) 0%,
-      rgba(13, 13, 13, 0.62) 45%,
-      rgba(13, 13, 13, 0.28) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(13, 13, 13, 0.55) 0%,
-      rgba(13, 13, 13, 0.2) 50%,
-      rgba(13, 13, 13, 0.85) 100%
-    );
-  pointer-events: none;
-}
-
-.hero-sticky-stage .site-header {
-  position: relative;
-  z-index: 3;
 }
 
 .hero-section-wrap {
@@ -1075,32 +1029,13 @@ body {
     font-size: 1.25rem;
   }
 
-  /* Hero Mobile (Vídeo de fundo com gradiente de leitura e textos centralizados) */
-  .hero-scroll-track {
-    height: 175vh;
-  }
 
-  .hero-bg-video-layer {
-    justify-content: center;
-    padding-right: 0;
-    padding-top: 1.5rem;
-  }
 
-  .hero-scroll-video {
-    width: 94vw;
-    height: 50vh;
-    object-fit: contain;
-    object-position: center center;
-  }
 
-  .hero-bg-gradient {
-    background:
-      radial-gradient(
-        circle at center,
-        rgba(13, 13, 13, 0.58) 0%,
-        rgba(13, 13, 13, 0.86) 100%
-      );
-  }
+
+
+
+
 
   .hero-section-wrap {
     padding-top: 1.5rem;
