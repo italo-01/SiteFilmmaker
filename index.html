@@ -375,7 +375,7 @@
     // 1. Pausa imediata ao rolar a página para cima ou para baixo (Vertical Scroll)
     window.addEventListener('scroll', function () {
       if (currentPlayingVideo && !currentPlayingVideo.paused) {
-        if (Math.abs(window.scrollY - playWindowScrollY) > 20) {
+        if (Math.abs(window.scrollY - playWindowScrollY) > 120) {
           pauseActiveVideo();
         }
       }
@@ -398,7 +398,7 @@
             entry.target.pause();
           }
         });
-      }, { threshold: 0.6 });
+      }, { threshold: 0.2 });
 
       document.querySelectorAll('.portfolio-video').forEach(function (v) {
         videoObserver.observe(v);
@@ -457,7 +457,7 @@
       // 6. Ao rolar o carrossel (Scroll com inércia / snap)
       portfolioGrid.addEventListener('scroll', function () {
         if (currentPlayingVideo && !currentPlayingVideo.paused) {
-          if (Math.abs(portfolioGrid.scrollLeft - playScrollLeft) > 20) {
+          if (Math.abs(portfolioGrid.scrollLeft - playScrollLeft) > 120) {
             pauseActiveVideo();
           }
         }
@@ -477,7 +477,10 @@
         // Se estava arrastando o carrossel, não ativa o play
         if (isDragging) return;
 
-        if (video.paused) {
+        if (video.paused || video.ended) {
+          if (video.ended || (video.duration && video.currentTime >= video.duration - 0.2)) {
+            video.currentTime = 0;
+          }
           // Pausa outros vídeos
           document.querySelectorAll('.portfolio-video').forEach(function (v) {
             if (v !== video) v.pause();
@@ -505,6 +508,7 @@
       });
 
       video.addEventListener('ended', function () {
+        video.currentTime = 0;
         wrap.classList.remove('is-playing');
         if (currentPlayingVideo === video) {
           currentPlayingVideo = null;
